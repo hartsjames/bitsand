@@ -88,22 +88,23 @@ if (USE_PAY_PAL)
 echo "by cheque, cash or postal order. Once your payment has been confirmed (by an admin) you will be listed in the booking list for that event.\n";
 echo "</p>\n<p>\n";
 
+
 echo "<h2>Player Details</h2>";
-echo "<p><a href = 'ooc_form.php'>";
-if ($bOOC == true) { echo "Edit ";} else {echo "Enter ";}
+echo "<p><a class='btn btn-info w-50 d-block mx-auto' href = 'ooc_form.php'>";
+if ($bOOC == true) { echo "<i class='fas fa-user-circle pr-2'></i>Edit ";} else {echo "<i class='fas fa-user-circle pr-2'></i>Enter ";}
 echo "OOC information</a></p>\n";
 ?>
 </p>
 
 <?php
-echo "<p><a href = 'ic_form.php'>";
-if ($iIC == 1) { echo "Edit "; } else {echo "Enter ";}
+echo "<p><a class='btn btn-info w-50 d-block mx-auto' href = 'ic_form.php'>";
+if ($iIC == 1) { echo "<i class='far fa-user-circle pr-2'></i>Edit "; } else {echo "<i class='far fa-user-circle pr-2'></i>Enter ";}
 echo "IC information</a><br>\n";
 
 if ($bOOC)
 {
 	echo "<h2>Events</h2>";
-	echo "<p><a href='iCalendar.php'>iCalendar feed of events</a></p>\n";
+	echo "<p><a class='btn btn-info w-50 d-block mx-auto' href='iCalendar.php'><i class='fas fa-calendar-alt pr-2'></i>iCalendar feed of events</a></p>\n";
 
 	$sql = "select bkEventID from {$db_prefix}bookings where bkPlayerID = $PLAYER_ID";
 	$result = ba_db_query ($link, $sql);
@@ -125,7 +126,7 @@ if ($bOOC)
 	{
 		$availableevents++;
 		$eventlinks.= "<tr><td><a href='eventdetails.php?EventID=".$row['evEventID']."'>". htmlentities (stripslashes ($row['evEventName']))."</a></td><td>".$row['evEventDate']."</td><td>";
-		if ($row['evBookingsClose'] >= $today) { $eventlinks .= "<a href='eventbooking.php?EventID=".$row['evEventID']."'>Book Now!</a>"; }
+		if ($row['evBookingsClose'] >= $today) { $eventlinks .= "<a class='btn btn-warning' href='eventbooking.php?EventID=".$row['evEventID']."'>Book Now!</a>"; }
 		else { $eventlinks .= "Bookings closed"; }
 		$eventlinks.="</td></tr></td>";
 	}
@@ -159,6 +160,8 @@ else
 	echo "You must enter your IC and OOC details before booking any events";
 }
 
+
+
 $sql = "select bkID, bookingplayer.plFirstName, bookingplayer.plSurname, chPreferredName, evEventName, bkBookAs from {$db_prefix}paymentrequests inner join {$db_prefix}bookings on prBookingID = bkID inner join {$db_prefix}events on bkEventID = evEventID inner join {$db_prefix}players on prEmail =  {$db_prefix}players.plEmail inner join {$db_prefix}players as bookingplayer on bkPlayerID = bookingplayer.plPlayerID inner join {$db_prefix}characters on chPlayerID = bookingplayer.plPlayerID where {$db_prefix}players.plPlayerID = $PLAYER_ID";
 
 $result = ba_db_query ($link, $sql);
@@ -174,7 +177,7 @@ if (ba_db_num_rows($result) > 0)
 			echo "<td>".$row['chPreferredName']."</td>";
 			echo "<td>". htmlentities (stripslashes ($row['evEventName']))."</td>";
 			echo "<td>".str_replace('Staff', $stafftext, $row['bkBookAs'])."</td>";
-			echo "<td><a href='booking.php?BookingID=".$row['bkID']."'>Pay Now!</a></td>";
+			echo "<td><a class='btn btn-warning' href='booking.php?BookingID=".$row['bkID']."'>Pay Now!</a></td>";
 
 			echo "</tr>";
 		}

@@ -177,45 +177,44 @@ if ($sWarn != '')
 	echo "<p class = 'warn'>$sWarn</p>";
 ?>
 
-<p>
-<i>Required fields are <span class = "req_colour">shaded</span></i>. Details will appear on your character card <i>exactly</i> as you type them - if you don't use capitals, capitals won't appear on your character card.
-</p>
+    <p>
+        <i>Required fields are highlighted in red.</i>. Details will appear on your character card <i>exactly</i> as you type them - if you don't use capitals, capitals won't appear on your character card.
+    </p>
 
 <form action = 'ooc_form.php' method = 'post' accept-charset="iso-8859-1">
 
-<table><tr>
-<td>First name:</td>
-<td><input type = "text" class = "required" name = "txtFirstName" value = "<?php echo htmlentities (stripslashes ($playerrow ['plFirstName']))?>"></td>
-</tr><tr>
-<td>Surname:</td>
-<td><input type = "text" class = "required" name = "txtSurname" value = "<?php echo htmlentities (stripslashes ($playerrow ['plSurname']))?>"></td>
-</tr><tr><td colspan = "2">&nbsp;</td></tr>
-<tr>
-  <td>Player ID:</td>
-  <td><input type="text" class="text" name="txtPlayerNumber" value="<?php echo htmlentities(stripslashes($playerrow['plPlayerNumber'])); ?>"; ?></td>
-</tr>
-<tr><td>Address:</td>
-<td><input type = "text" class = "required" name = "txtAddress1" value = "<?php echo htmlentities (stripslashes ($playerrow ['dAddress1']))?>"><br>
-<input type = "text" class = "text" name = "txtAddress2" value = "<?php echo htmlentities (stripslashes ($playerrow ['dAddress2']))?>"><br>
-<input type = "text" class = "text" name = "txtAddress3" value = "<?php echo htmlentities (stripslashes ($playerrow ['dAddress3']))?>"><br>
-<input type = "text" class = "text" name = "txtAddress4" value = "<?php echo htmlentities (stripslashes ($playerrow ['dAddress4']))?>"></td>
-</tr><tr><td colspan = "2">&nbsp;</td></tr><tr>
-<td>Postcode:</td>
-<td><input type = "text" class = "text" name = "txtPostcode" value = "<?php echo htmlentities (stripslashes ($playerrow ['dPostcode']))?>"></td>
-</tr><tr>
-<td>Telephone number:</td>
-<td><input type = "text" class = "text" name = "txtPhone" value = "<?php echo htmlentities (stripslashes ($playerrow ['dTelephone']))?>"></td>
-</tr><tr>
-<td>Mobile number:</td>
-<td><input type = "text" class = "text" name = "txtMobile" value = "<?php echo htmlentities (stripslashes ($playerrow ['dMobile']))?>"></td>
-</tr><tr>
-<td>E-mail address:</td>
-<td><?php echo htmlentities (stripslashes ($playerrow ['plEmail']))?>&nbsp;<a href = "change_password.php">change</a></td>
-</tr><tr>
-<td colspan = "2">&nbsp;</td>
-</tr><tr>
-<td>Date of birth:</td>
-<td>
+    <div class="form-group">
+<label for='txtFirstName'>First name(s):</label>
+<input required type = "text" class = "form-control w-75 is-invalid" id='txtFirstName' name = "txtFirstName" value = "<?php echo htmlentities (stripslashes ($playerrow ['plFirstName']))?>">
+    </div><div class="form-group">
+    <label for='txtSurname'>Last name:</label>
+<input required type = "text" class = "form-control w-75 is-invalid" id='txtSurname' name = "txtSurname" value = "<?php echo htmlentities (stripslashes ($playerrow ['plSurname']))?>">
+    </div><div class="form-group">
+    <label for='txtPlayerNumber'>Player ID:</label>
+<input type="text" class="form-control text w-75" id="txtPlayerNumber" name="txtPlayerNumber" value="<?php echo htmlentities(stripslashes($playerrow['plPlayerNumber'])); ?>"; ?>
+    </div><div class="form-group">
+        <label for='txtAddress'>Address:</label>
+<td><input required type = "text" class = "form-control is-invalid w-75" id="textAddress" name = "txtAddress1" value = "<?php echo htmlentities (stripslashes ($playerrow ['dAddress1']))?>"><br>
+<input type = "text" class = "form-control text w-75" name = "txtAddress2" value = "<?php echo htmlentities (stripslashes ($playerrow ['dAddress2']))?>"><br>
+<input type = "text" class = "form-control text w-75" name = "txtAddress3" value = "<?php echo htmlentities (stripslashes ($playerrow ['dAddress3']))?>"><br>
+<input type = "text" class = "form-control text w-75" name = "txtAddress4" value = "<?php echo htmlentities (stripslashes ($playerrow ['dAddress4']))?>">
+    </div><div class="form-group">
+
+        <label for='txtPostcode'>Postcode:</label>
+<input type = "text" class = "form-control text w-75" id="txtPostcode" name = "txtPostcode" value = "<?php echo htmlentities (stripslashes ($playerrow ['dPostcode']))?>">
+    </div><div class="form-group">
+        <label for='txtPhone'>Telephone Number:</label>
+<input type = "text" class = "form-control text w-75" id = "txtPhone" name = "txtPhone" value = "<?php echo htmlentities (stripslashes ($playerrow ['dTelephone']))?>">
+    </div><div class="form-group">
+        <label for='txtMobile'>Mobile Number:</label>
+<input type = "text" class = "form-control text w-75" id = "txtMobile" name = "txtMobile" value = "<?php echo htmlentities (stripslashes ($playerrow ['dMobile']))?>">
+    </div><div class="form-group">
+        <label for='txtEmail'>E-mail address:</label>
+        <div id = "txtEmail class="form-control w-75"><?php echo htmlentities (stripslashes ($playerrow ['plEmail']))?>&nbsp;<a href = "change_password.php">change</a></div>
+    </div><div class="form-group">
+
+        <label for='p1DOB'>Date Of Birth:</label>
+
 
 <?php
 $sDoB = $playerrow ['plDOB'];
@@ -230,17 +229,16 @@ if ($sDoB != '') {
 else
 	DatePicker ('Dob', -25);
 ?>
-
-</td>
-</tr><tr>
-<td>Tick if you have any medical<br>issues we need to know about:</td>
+    </div><div class="form-group">
+        <label for='chkMedical'>Tick if you have any medical issues we need to know about:
 <?php
 $sMedInfo = htmlentities (stripslashes ($playerrow ['dMedicalInfo']));
 if ($sMedInfo == '')
-	echo "<td><input name = 'chkMedical' type = 'checkbox' onclick = 'fnShowMedical ()'><br>\n";
+	echo "<input class='form-check-input ml-2' id = 'chkMedical' name = 'chkMedical' type = 'checkbox' onclick = 'fnShowMedical ()'><br>\n";
 else
-	echo "<td><input name = 'chkMedical' type = 'checkbox' checked onclick = 'fnShowMedical ()'><br>\n";
+	echo "<input class='form-check-input ml-2' id = 'chkMedical' name = 'chkMedical' type = 'checkbox' checked onclick = 'fnShowMedical ()'><br>\n";
 ?>
+        </label>
 <!--
 SPAN is used to hide/show medical info box. JavaScript is used to write
 SPAN tags so that, if JS is disabled, medical info box is always shown
@@ -255,7 +253,7 @@ else
 ?>
 // -->
 </script>
-<textarea cols = "60" rows = "4" class = "text" name = "txtMedicalInfo" onfocus = "fnClearValue ('txtMedicalInfo', 'Enter details here')">
+<textarea class ='form-control w-75' cols = "60" rows = "4" class = "text" name = "txtMedicalInfo" onfocus = "fnClearValue ('txtMedicalInfo', 'Enter details here')">
 <?php
 $sMedInfo = htmlentities (stripslashes ($playerrow ['dMedicalInfo']));
 if ($sMedInfo == '')
@@ -264,42 +262,41 @@ else
 	echo $sMedInfo;
 ?>
 </textarea>
+    </div><div class="form-group">
 <script type = 'text/javascript'>
 <!--
 document.write ('<\/span>')
 // -->
 </script>
-</td></tr><tr>
-<td colspan = "2">&nbsp;</td>
-</tr><tr>
-<td>Emergency contact name:</td>
-<td><input type = "text" class = "required" name = "txtEmergencyName" value = "<?php echo htmlentities (stripslashes ($playerrow ['plEmergencyName']))?>"></td>
-</tr><tr>
-<td>Emergency contact number:</td>
+
+        <label for='txtEmergencyName'>Emergency Contact Name:</label>
+<input required type = "text" class = "form-control is-invalid w-75" id = "txtEmergencyName" name = "txtEmergencyName" value = "<?php echo htmlentities (stripslashes ($playerrow ['plEmergencyName']))?>">
+        </div><div class="form-group">
+        <label for='txtEmergencyNumber'>Emergency contact number:</label>
 <?php
 if ($playerrow ['dEmergencyNumber'] == '')
 	$sValue = '(`On site` is OK)';
 else
 	$sValue = $playerrow ['dEmergencyNumber'];
 ?>
-<td><input type = "text" class = "required" name = "txtEmergencyNumber" value = '<?php echo htmlentities (stripslashes ($sValue))?>' onfocus = "fnClearValue ('txtEmergencyNumber', '(`On site` is OK)')"></td>
-</tr><tr>
-<td>Relationship to emergency contact:</td>
-<td><input type = "text" class = "required" name = "txtEmergencyRelationship" value = "<?php echo htmlentities (stripslashes ($playerrow ['plEmergencyRelationship']))?>"></td>
-</tr><tr>
-<td colspan = "2">&nbsp;</td>
-</tr><tr>
-<td>Car registration:</td>
+<input required type = "text" class = "form-control is-invalid w-75" id = "txtEmergencyNumber" name = "txtEmergencyNumber" value = '<?php echo htmlentities (stripslashes ($sValue))?>' onfocus = "fnClearValue ('txtEmergencyNumber', '(`On site` is OK)')">
+    </div><div class="form-group">
+<label for="txtEmergencyRelationship">Relationship to emergency contact:</label>
+<td><input required type = "text" class = "form-control is-invalid w-75" id="txtEmergencyRelationship" name = "txtEmergencyRelationship" value = "<?php echo htmlentities (stripslashes ($playerrow ['plEmergencyRelationship']))?>">
+    </div><div class="form-group">
+<label for="txtCarRegistration">Car registration:</label>
 <?php
 if ($playerrow ['plCarRegistration'] == '')
 	$sValue = 'Enter NA if you do not drive';
 else
 	$sValue = $playerrow ['plCarRegistration'];
 ?>
-<td><input type = "text" class = "required" name = "txtCarRegistration" value = '<?php echo htmlentities (stripslashes ($sValue))?>' onfocus = "fnClearValue ('txtCarRegistration', 'Enter NA if you do not drive')"></td>
-</tr><tr>
-<td>Dietary requirements:</td>
-<td><select name = "selDiet" class = "req_colour">
+<input required type = "text" class = "form-control is-invalid w-75" id = "txtCarRegistration" name = "txtCarRegistration" value = '<?php echo htmlentities (stripslashes ($sValue))?>' onfocus = "fnClearValue ('txtCarRegistration', 'Enter NA if you do not drive')">
+
+    </div><div class="form-group">
+
+<label for="selDiet">Dietary requirements:</label>
+<td><select required id = "selDiet" name = "selDiet" class = "form-control is-invalid w-75">
 <?php
 if ($playerrow ['plDietary'] == '')
 	$sValue = 'Select one';
@@ -314,8 +311,7 @@ foreach ($asOptions as $sOption) {
 }
 ?>
 </select>
-</td>
-</tr>
+
 
 <!--
 <tr>
@@ -340,16 +336,18 @@ foreach ($asOptions as $sOption) {
 </select></td>
 </tr>
 -->
+    </div><div class='form-group'>
 <?php
-echo "<tr><td>Are you a Ref or Marshal</td>";
-echo "<td><select name='cboMarshal'>";
+echo "<label for='cboMarshal'>Are you a Ref or Marshal</label>";
+echo "<td><select class='form-control w-75' id='cboMarshal' name='cboMarshal'>";
 echo "<option "; if ($playerrow ['plMarshal']== "No") { echo "selected"; }; echo " >No</option>";
 echo "<option "; if ($playerrow ['plMarshal']== "Marshal") { echo "selected"; }; echo " >Marshal</option>";
 echo "<option "; if ($playerrow ['plMarshal']== "Referee") { echo "selected"; }; echo " >Referee</option>";
 echo "<option "; if ($playerrow ['plMarshal']== "Senior Referee") { echo "selected"; }; echo " >Senior Referee</option>";
-echo "</select></td>\n";
-echo "<tr><td>Ref Number:</td><td><input type=text class = 'text' name='txtRefNumber' size=5 value='" . htmlentities (stripslashes ($playerrow ['plRefNumber'])) . "'/></td>\n";
-echo "</tr>";
+echo "</select>\n";
+echo "</div><div class='form-group'>";
+echo "<label for='txtRefNumber'>Ref Number:</label><input type=text class = 'form-control text w-75' id='txtRefNumber' name='txtRefNumber' size=5 value='" . htmlentities (stripslashes ($playerrow ['plRefNumber'])) . "'/>\n";
+echo "</div><div class='form-group'>";
 
 /*
 echo "<tr><td>Tick to request a bunk:</td>\n";
@@ -368,25 +366,25 @@ if ($bBunksAvailable == False && $playerrow ['plBookAs'] != '') {
 
 if (ALLOW_EVENT_PACK_BY_POST)
 {
-	echo "<tr><td>Tick to request event pack by post:</td>";
+	echo "<label for='chkEventPackByPost'>Tick to request event pack by post:</label>";
 	if ($playerrow ['plEventPackByPost'] == 1)
 		$sTick = ' checked';
 	else
 		$sTick = '';
-	echo "<td><input type = 'checkbox' name = 'chkEventPackByPost' value = 'ByPost'$sTick>";
-	echo "</td></tr>\n";
+	echo "<input class='form-check-input' type = 'checkbox' id = 'chkEventPackByPost' name = 'chkEventPackByPost' value = 'ByPost'$sTick>";
+    echo "</div><div class='form-group'>";
 }
 ?>
-
-<tr><td>General OOC Notes (not medical/allergy):<br>
-<i>Please do not include IC notes here -<br>
-there is a box on the IC form for notes<br>
-related to your character</i></td>
-<td><textarea cols = "60" rows = "4" class = "text" name = 'txtNotes'><?php echo htmlentities (stripslashes ($playerrow ['plNotes']))?></textarea></td></tr>
-<tr><td colspan = '2'>&nbsp;</td></tr>
-<tr><td class = 'mid'><input type = 'submit' value = "Submit" name = "btnSubmit"></td>
-<td class = 'mid'><input type = 'reset' value = "Reset form"></td></tr>
-</table>
+</div><div class='form-group'>
+<label for="txtNotes">General OOC Notes (not medical/allergy):<label>
+<small id="helpOOCNotes" class="form-text text-muted">Please do not include IC notes here -
+there is a box on the IC form for notes
+related to your character</small>
+<textarea rows = "4" class = "form-control text w-75" name = 'txtNotes'><?php echo htmlentities (stripslashes ($playerrow ['plNotes']))?></textarea>
+</div><div class='form-group'>
+<button type = 'submit' value = "Submit" name = "btnSubmit" class='btn btn-success mr-2'><i class='fas fa-check mr-1'></i>Submit</button>
+<button type = 'reset' value = "Reset form" class='btn btn-secondary mr-2'><i class='fas fa-undo mr-1'></i>Reset</button>
+</div>
 
 </form>
 

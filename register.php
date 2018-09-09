@@ -101,6 +101,11 @@ include ('inc/inc_head_html.php');
 
 <h1><?php echo TITLE?> - Register</h1>
 
+    <div class="alert alert-danger mr-3" role="alert">
+        By registering for this site you consent to all data you supply being held by <?php echo TITLE ?>. Your Out of Character and In-Character names will be visible to all visitors to this site for any event you are booked to attend. You can request removal of your details at any time by contacting
+        <?php echo "<a href=mailto:" . Obfuscate (TECH_CONTACT_MAIL) . ">" . TECH_CONTACT_NAME . "</a>." ?>
+    </div>
+
 <p>
 To register, enter your e-mail address below, then click <b>Register</b>. A randomly-generated password will be e-mailed to you, and you will then be able to use your e-mail address and the password to log in. If you do not get the e-mail, check your Junk/Spam folder - it may have been marked as spam (this appears to be particularly common with web-based e-mail services)<br>
 <i>Note that because a password will be e-mailed to you, you must supply a valid e-mail address</i>.
@@ -116,19 +121,21 @@ if ($sProblem != '')
   <table class="blockmid">
     <tr>
       <td>E-mail address:</td>
-      <td><input name="txtEmail" type="email" class="text"></td>
+      <td><input class="form-control" name="txtEmail" type="email" class="text"></td>
     </tr>
     <tr>
       <td colspan="2">Please ensure that you have read and understood the <a href="terms.php" target="_blank">terms &amp; conditions</a></td>
     </tr>
     <tr>
       <td colspan="2" class="mid">
-        <input type="submit" name="btnSubmit" value="Register">&nbsp;
-        <input type = 'reset' value = "Reset form">
+        <button type="submit" name="btnSubmit" value="Register" class='btn btn-warning mr-2'><i class='fas fa-user-plus mr-1'></i>Register</button>&nbsp;
+        <button type = 'reset' value = "Reset form" class='btn btn-secondary mr-2'><i class='fas fa-undo mr-1'></i>Reset</button>&nbsp;
       </td>
     </tr>
   </table>
 </form>
+
+
 
 <h2>Already Registered</h2>
 
@@ -203,7 +210,7 @@ If you are registered on another copy of Bitsand, simply select the system from 
     <tr>
       <td>System to copy from:</td>
       <td>
-        <select name="selSystem">
+        <select class="form-control" name="selSystem">
 <?php 	foreach ($ba_systems as $name=>$system) : ?>
           <option value="<?php echo $system['url']; ?>"><?php echo $name; ?> (OOC details only)</option>
 <?php 	endforeach; ?>
@@ -213,22 +220,21 @@ If you are registered on another copy of Bitsand, simply select the system from 
     </tr>
     <tr>
       <td>E-mail:</td>
-      <td><input name="email" type="email" /></td>
+      <td><input class="form-control" name="email" type="email" /></td>
     </tr>
     <tr>
       <td>Password:</td>
-      <td><input name="password" type="password" /></td>
+      <td><input class="form-control" name="password" type="password" /></td>
     </tr>
     <tr>
       <td colspan="2" align="center">
-        <input name="ic" id="ic" type="checkbox" />&nbsp;
-        <label for="ic">Tick to copy IC details</label>
+        <input class="form-check-input" name="ic" id="ic" type="checkbox" />&nbsp;
+        <label class="form-check-label" for="ic">Tick to copy IC details</label>
       </td>
     </tr>
-    <tr>
       <td colspan="2" class="mid">
-        <input type="submit" name="btnSubmit" value="Copy Details" />&nbsp;
-        <input type="reset" value="Reset form" />
+          <button type="submit" name="btnSubmit" value="Copy Details" class='btn btn-warning mr-2'><i class='fas fa-copy mr-1'></i>Copy Details</button>
+        <button type="reset" value="Reset form"  class='btn btn-secondary mr-2'><i class='fas fa-undo mr-1'></i>Reset</button>
       </td>
     </tr>
   </table>

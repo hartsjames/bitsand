@@ -195,12 +195,14 @@ if ($_GET ['warn'] != '' || $sMessage != '')
 <table class="blockmid">
 <tr>
 <td>E-mail address:</td>
-<td><input name="txtEmail" type="email" class="text"<?php if (isset($sEmail) && !empty($sEmail)) echo ' value="' , $sEmail , '"'; ?>></td>
+<td><input name="txtEmail" type="email" class="form-control text"<?php if (isset($sEmail) && !empty($sEmail)) echo ' value="' , $sEmail , '"'; ?>></td>
 </tr><tr>
 <td>Password:</td>
-<td><input name="txtPassword" type="password" class="text"></td>
+<td><input name="txtPassword" type="password" class="form-control text"></td>
 </tr><tr>
-<td colspan="2" class="mid"><input type="submit" name="btnSubmit" value="Login">&nbsp;<input type="reset" value="Reset form"></td>
+<td colspan="2" class="mid">
+    <button type="submit" name="btnSubmit" value="Login" class='btn btn-warning mr-2'><i class='fas fa-sign-in-alt mr-1'></i>Login</button>&nbsp;
+    <button type="reset" value="Reset form" class='btn btn-secondary mr-2'><i class='fas fa-undo mr-1'></i>Reset</button></td>
 </tr>
 </table>
 </form>

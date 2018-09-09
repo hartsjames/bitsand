@@ -66,7 +66,7 @@ $result = ba_db_query ($link, $sql);
 if ((BOOKING_LIST_IF_LOGGED_IN && $PLAYER_ID != 0) || !BOOKING_LIST_IF_LOGGED_IN) {
 	echo "<a name='booked' />";
 	echo "<p>The people below have booked and paid for this event</p>";
-	echo "<table border = '1' class='sortable'><tr><th>OOC First Name</th><th>OOC Surname</th><th>IC Name</th>";
+	echo "<table class='sortable table table-hover table-striped table-sm'><tr><th>OOC First Name</th><th>OOC Surname</th><th>IC Name</th>";
 
 	if (LIST_GROUPS_LABEL != '')
 		echo "<th>Group</th>";

@@ -208,26 +208,30 @@ if ($sWarn != '')
 ?>
 
 <p>
-<i>Required fields are <span class = "req_colour">shaded</span></i>. Details will appear on your character card <i>exactly</i> as you type them - if you don't use capitals, capitals won't appear on your character card.
+<i>Required fields are highlighted in red.</i>. Details will appear on your character card <i>exactly</i> as you type them - if you don't use capitals, capitals won't appear on your character card.
 </p>
 
 <form method='POST' action='ic_confirmclear.php'>
-<p>Clear character details : <input type = 'submit' value = 'Clear' name = 'btnSubmit' /></p>
+    <p>Clear character details : <button class ='btn btn-danger mr-2' type = 'submit' value = 'Clear' name = 'btnSubmit' /><i class="fas fa-user-minus mr-1"></i>Clear</button></p>
 </form>
 
 <p>
 <form action = "ic_form.php" method = "post" name = "ic_form" onsubmit = "return ic_js_check ()" accept-charset="iso-8859-1">
 
-<table class="characterDisplay"><tr>
-<td>Character Name:</td>
-<td><input type = "text" name = "txtCharName" class = "required" value = "<?php echo htmlentities (stripslashes ($row ['chName']))?>"></td>
-</tr><tr>
-<td>Preferred Character Name:</td>
-<td class="charactertext"><input type = "text" name = "txtPreferredName" class = 'text' value = "<?php echo htmlentities (stripslashes ($row ['chPreferredName']))?>"><?php HelpLink ('help_preferred_name.php'); ?></td>
-</tr><tr>
-<td>Race &amp; Gender:</td>
-<td>
-<select class = "req_colour" name = "selRace">
+    <div class="form-group">
+    <label for="txtCharName">Character Name</label>
+    <input required type = "text" id = "txtCharName" name = "txtCharName" class = "form-control w-75 is-invalid" value = "<?php echo htmlentities (stripslashes ($row ['chName']))?>"></td>
+    <small id="helpCharName" class="form-text text-muted">Please type your character name exactly as printed on your character card.</small>
+    </div><div class="form-group">
+
+<label for=""txtPreferredName">Preferred Character Name:</label>
+<input type = "text" id="txtPreferredName" name = "txtPreferredName" class = 'form-control w-75 text' value = "<?php echo htmlentities (stripslashes ($row ['chPreferredName']))?>">
+        <small id="helpPreferredName" class="form-text text-muted">If your character goes by a different name in public to their actual character name,</br> then fill it in here. Any name entered here will be shown in public instead of your actual character name.
+
+    If you leave this blank, then your actual character name will be displayed.</small>
+    </div><div class="form-group">
+<label for="selRace">Select Race</label>
+<select required class = "form-control is-invalid w-75" id="selRace" name = "selRace">
 <?php
 $sValue = $row ['chRace'];
 $asOptions = array ('Ancestral', 'Beastkin', 'Daemon', 'Drow', 'Dwarves', 'Elemental', 'Elves', 'Fey', 'Halfling', 'Human', 'Mineral', 'Ologs', 'Plant', 'Umbral', 'Urucks');
@@ -239,7 +243,9 @@ foreach ($asOptions as $sOption) {
 }
 ?>
 </select>
-<select class = "req_colour" name = "selGender">
+    </div><div class='form-group'>
+
+<!-- <select class = "form-control req_colour" name = "selGender">
 <?php
 $sValue = $row ['chGender'];
 $asOptions = array ('Male', 'Female');
@@ -250,24 +256,22 @@ foreach ($asOptions as $sOption) {
 	echo ">" . htmlentities (stripslashes ($sOption)) . "</option>\n";
 }
 ?>
-</select></td>
-</tr>
+</select>-->
+
 <?php
 if (LIST_GROUPS_LABEL != '') {
-	echo "<tr><td>" . LIST_GROUPS_LABEL . "</td><td>";
-	echo "<select name = 'selGroup'>";
+	echo "<label for='selGroup'>" . LIST_GROUPS_LABEL . "</label>";
+	echo "<select id='selGroup' class='form-control w-75' name = 'selGroup'>";
 	if ($row ['chGroupSel'] != '')
 		ListNames ($link, DB_PREFIX . 'groups', 'grName', stripslashes ($row ['chGroupSel']));
 	else
 		ListNames ($link, DB_PREFIX . 'groups', 'grName', 'Other (enter name below)');
 	echo "</select>&nbsp;";
-	HelpLink ('help_group.php');
-	echo "<br>";
 	if ($row ['chGroupText'] != '')
-		echo "<input type = 'text' class = 'text' name = 'txtGroup' value = \"" . htmlentities (stripslashes ($row ['chGroupText'])) . "\" onfocus = \"fnClearValue ('txtGroup', 'Enter name here if not in above list')\">";
+		echo "<input type = 'text' class = 'form-control text w-50' name = 'txtGroup' value = \"" . htmlentities (stripslashes ($row ['chGroupText'])) . "\" onfocus = \"fnClearValue ('txtGroup', 'Enter name here if not in above list')\">";
 	else
-		echo "<input type = 'text' class = 'text' name = 'txtGroup' value = 'Enter name here if not in above list' onfocus = \"fnClearValue ('txtGroup', 'Enter name here if not in above list')\">";
-	echo "</td></tr>";
+		echo "<input type = 'text' class = 'form-control text w-50' name = 'txtGroup' value = 'Enter name here if not in above list' onfocus = \"fnClearValue ('txtGroup', 'Enter name here if not in above list')\">";
+echo "<small id='groupHelp' class='form-text text-muted'>Select your character's group from the drop-down list. If your group is not listed, enter the group name in the text box below.</small>";
 }
 else {
 	//Write out hidden fields so that queries don't get broken
@@ -275,27 +279,25 @@ else {
 	echo "<input type = 'hidden' name = 'txtGroup' value = ''>";
 }
 ?>
-<tr>
-<td>Faction</td>
-<td><select name = "selFaction" class = "req_colour">
+    </div><div class='form-group'>
+<label for="selFaction">Faction</label>
+<select required id="selFaction" name = "selFaction" class = "form-control is-invalid w-75">
 <?php
 if ($row ['chFaction'] != '')
 	ListNames ($link, DB_PREFIX . 'factions', 'faName', htmlentities (stripslashes ($row ['chFaction'])));
 else
 	ListNames ($link, DB_PREFIX . 'factions', 'faName', DEFAULT_FACTION);
 ?>
-</select>&nbsp;
-<?php
-HelpLink ('help_no_faction.php');
-?>
-</td>
-</tr><tr>
-<td>Ancestor:</td>
+</select>
+        <small id='factionHelp' class='form-text text-muted'>Select your character's faction from the drop-down list. If you are not in a faction, select either "Non-Faction" or "Staff" from the list, as appropriate.</small>
+
+    </div><div class='form-group'>
+<label for="selAncestor">Ancestor</label>
 <?php
 if (ANCESTOR_DROPDOWN)
 {
 	echo "<td>";
-	echo "<select name = 'selAncestor'>";
+	echo "<select class='form-control w-75' id='selAncestor' name = 'selAncestor'>";
 	if ($row ['chAncestorSel'] != '')
 		ListNames ($link, DB_PREFIX . 'ancestors', 'anName', stripslashes ($row ['chAncestorSel']));
 	else
@@ -303,33 +305,31 @@ if (ANCESTOR_DROPDOWN)
 	echo "</select>&nbsp; </td></tr><tr><td></td>";
 		echo "<td>";
 	if ($row ['chAncestor'] != '')
-		echo "<input type = 'text' class = 'text' name = 'txtAncestor' value = \"" . htmlentities (stripslashes ($row ['chAncestor'])) . "\" onfocus = \"fnClearValue ('txtAncestor', 'Enter name here if not in above list')\">";
+		echo "<input type = 'text' class = 'form-control text w-50' name = 'txtAncestor' value = \"" . htmlentities (stripslashes ($row ['chAncestor'])) . "\" onfocus = \"fnClearValue ('txtAncestor', 'Enter name here if not in above list')\">";
 	else
-		echo "<input type = 'text' class = 'text' name = 'txtAncestor' value = 'Enter name here if not in above list' onfocus = \"fnClearValue ('txtAncestor', 'Enter name here if not in above list')\">";
+		echo "<input type = 'text' class = 'form-control text w-50' name = 'txtAncestor' value = 'Enter name here if not in above list' onfocus = \"fnClearValue ('txtAncestor', 'Enter name here if not in above list')\">";
 	echo "</td></tr>";
 
 }
 else
 {
-echo '<td><input type = "text" class = "text" name = "txtAncestor" value = "'.htmlentities (stripslashes ($row ['chAncestor'])).'"></td></tr>';
+echo '<input type = "text" class = "form-control text" name = "txtAncestor" value = "'.htmlentities (stripslashes ($row ['chAncestor'])).'">';
 echo "<input type = 'hidden' name = 'selAncestor' value = ''>";
 
 }
 ?>
-</tr>
+    </div><div class='form-group'>
 <?php
 if (LOCATIONS_LABEL == '')
 	//Write a hidden field so that INSERT/UPDATE query does not break
 	echo "<input type = 'hidden' name = 'selLocation' value = ''>";
 else {
-	echo "<tr><td>" . LOCATIONS_LABEL . "</td><td><select name = 'selLocation'>";
+	echo "<label for='selLocation'>" . LOCATIONS_LABEL . "</label><select class='form-control w-75' id = 'selLocation' name = 'selLocation'>";
 	ListNames ($link, DB_PREFIX . 'locations', 'lnName', htmlentities (stripslashes ($row ['chLocation'])));
-	echo "</select></td></tr>";
+	echo "</select>";
 }
 ?>
-
-
-</table>
+    </div>
 
 <script type = 'text/javascript'>
 function NewfnGuilds (iGuild) {
@@ -349,8 +349,8 @@ function NewfnGuilds (iGuild) {
 }
 </script>
 
-<p>
-<b>Guilds</b><br>
+    <div class='form-group'>
+        <p class='lead'>Guilds</p>
 <?php
 //Get character's guilds. Fill an array with the details. The array can then be queried, avoiding repeated DB queries
 $result = ba_db_query ($link, "SELECT gmName FROM {$db_prefix}guildmembers WHERE gmPlayerID = $PLAYER_ID ORDER BY gmName");
@@ -382,17 +382,17 @@ for ($iGuildCount = 1; $iGuildCount <= NUM_GUILDS; $iGuildCount++) {
 	echo "<script type = 'text/javascript'>\n<!--\n";
 	echo "document.write (\"<span id = 'spnGuild$iGuildCount' style = 'display: $sDisplay'>\")\n// -->\n</script>\n";
 	echo "Guild:\n";
-	echo "<select name = 'selGuild$iGuildCount' onchange = 'fnGuilds ($iGuildCount)'>\n";
+	echo "<select class='form-control w-75' name = 'selGuild$iGuildCount' onchange = 'fnGuilds ($iGuildCount)'>\n";
 	ListNamesFromArray ($asGuildSystem, $sGuild);
 	echo "</select><br>\n";
 	echo "<script type = 'text/javascript'>\n<!--\ndocument.write ('<\/span>')\n// -->\n</script>\n";
 }
 ?>
-</p>
+    </div>
 
 <p>
-<table>
-<tr><th colspan = "4">Skills</th></tr>
+<table class="table table-sm w-75">
+<tr><th colspan = "2"><p class='lead'>Skills</p></th></tr>
 <?php
 //Get character's skills. Fill an array with the skills. This array can then be queried, avoiding repeated DB queries
 $result = ba_db_query ($link, "SELECT * FROM {$db_prefix}skillstaken WHERE stPlayerID = '$PLAYER_ID'");
@@ -401,42 +401,47 @@ while ($row = ba_db_fetch_assoc ($result))
 	$aiSkillID [] = $row ['stSkillID'];
 
 //$sTR is either "<tr class = 'highlight'>" or "" - used to switch between two pairs of columns
-$sTR = "<tr class = 'highlight'>";
+$sTR = "<tr>";
 $result = ba_db_query ($link, "SELECT * FROM {$db_prefix}skills ORDER BY skID");
 while ($row = ba_db_fetch_assoc ($result)) {
 	//Find out if character has this skill
 	$has = array_search ($row ['skID'], $aiSkillID);
-	echo "$sTR<td>{$row ['skName']} ({$row ['skCost']})</td><td>";
-	echo "<input name = 'sk" . $row ['skID'] . "' value = '" . $row ['skCost'] . "' ";
+	echo "$sTR<td><div class=\"form-group form-check\">";
+    echo "<input class='form-check-input' id = 'sk" . $row ['skID'] . "'  name = 'sk" . $row ['skID'] . "' value = '" . $row ['skCost'] . "' ";
 	if ($has !== False)
 		//Character has this skill - tick the box
 		echo "checked ";
-	echo "type = 'checkbox' onclick = 'fnCalculate ()'>";
+	echo "type = 'checkbox' onclick = 'fnCalculate()'>";
+    echo "<label class='form-check-label' for='sk" . $row ['skID'] . "'> {$row ['skName']} ({$row ['skCost']}) </label>";
+  echo "</div>";
+
 	echo "</td>";
-	if ($sTR == "<tr class = 'highlight'>") {
+	if ($sTR == "<tr>") {
 		$sTR = "";
 		echo "\n";
 	}
 	else {
-		$sTR = "<tr class = 'highlight'>";
+		$sTR = "<tr>";
 		echo "</tr>\n";
 	}
 }
 ?>
 <tr><td colspan = '4'>&nbsp;</td></tr>
 <tr><td colspan = '4'><span id = 'spCost'></span></td></tr>
-<tr><td colspan = '4'>&nbsp;</td></tr>
-<tr><td colspan = '4'><?php echo IC_NOTES_TEXT ?><br>
-<textarea rows = "4" cols = "60" name = "txtNotes"><?php echo htmlentities (stripslashes ($sNotes))?></textarea>
-</td></tr>
-<tr><td colspan = '4'><b>Special items/powers/creatures</b> (you must have valid lammies<br>
-in order to use them at the event). Please enter one per line.<br>
-<textarea rows = "4" cols = "60" name = "txtSpecial"><?php echo htmlentities (stripslashes ($sOSP))?></textarea>
-</td></tr>
 </table>
+    <div class='form-group'>
+    <label for="txtNotes"><?php echo IC_NOTES_TEXT ?></label>
+<textarea rows = "4" cols = "60" id = "txtNotes" class="form-control w-75" name = "txtNotes"><?php echo htmlentities (stripslashes ($sNotes))?></textarea>
+    </div>
+    <div class='form-group'>
+    <label for="txtSpecial">Special items/powers/creatures</label>
+    <small id='groupHelp' class='form-text text-muted'>You must have valid lammies in order to use them at the event). Please enter one per line.</small>
+<textarea  rows = "4" cols = "60" id = "txtSpecial" class="form-control w-75" name = "txtSpecial"><?php echo htmlentities (stripslashes ($sOSP))?></textarea>
+    </div>
 
 <p>
-<b>OSPs</b><br>
+    <p class='lead'>OSPs</p>
+    <div class='form-group'>
 <?php
 //New and exciting way
 //Get character's OSPs. Fill an array with the details. The array can then be queried, avoiding repeated DB queries
@@ -456,9 +461,9 @@ while ($row = ba_db_fetch_assoc ($result)) {
 echo "</ul>";
 
 ?>
-</p>
-<p>
-Add Occupational Skill: <input type='text' id='addos' name='addos' />
+
+    <label for="addos">Add Occupational Skill</label>
+    <input type='text' class='form-control w-75' id='addos' name='addos' />
 <script type='text/javascript'>
 
 function removeosp(ospid) {
@@ -486,25 +491,20 @@ $("#addos").autocomplete({
 	});
 });
 </script>
-</p>
+    </div>
 
-<table>
-<tr><td class = 'mid'><input type = 'submit' value = 'Submit' name = 'btnSubmit'></td>
-<td class = 'mid'>
+<button type = 'submit' value = 'Submit' name = 'btnSubmit' class='btn btn-success mr-2'><i class='fas fa-check mr-1'></i>Submit</button>
 <script type = 'text/javascript'>
 <!--
 //Use a button to reset the form, so that fnCalculate can be called *after* the reset
-document.write ("<input type = 'button' value = 'Reset' onclick = 'location.reload();'>")
+document.write ("<button class='btn btn-secondary mr-2' type = 'button' value = 'Reset' onclick = 'location.reload();'><i class='fas fa-undo mr-1'></i>Reset</button>")
 //Do a fnCalculate on load to give initial values
 fnCalculate ();
 // -->
 </script>
 <noscript>
-<p><input type = 'reset' value = 'Reset'></p>
+<button type = 'reset' value = 'Reset' class='btn btn-secondary mr-2'><i class='fas fa-undo mr-1'></i>Reset</button>
 </noscript>
-</td></tr>
-</table>
-
 </form>
 
 <?php

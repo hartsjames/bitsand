@@ -40,7 +40,7 @@ echo "<h2>Events open for booking</h2>";
 	}
 	else
 	{
-		echo "<table>";
+		echo "<table class='sortable table table-hover table-striped table-sm'>";
 
 		while($row = ba_db_fetch_assoc($result))
 		{
@@ -61,7 +61,7 @@ echo "<h2>Events where booking has closed</h2>";
 	}
 	else
 	{
-		echo "<table>";
+		echo "<table class='sortable table table-hover table-striped table-sm'>";
 
 		while($row = ba_db_fetch_assoc($result))
 		{
